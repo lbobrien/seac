@@ -1005,9 +1005,9 @@ c***********************************************************************
       logical*4 Duplicate
       character Today*9,Now*8,ConcUnit*5
 
-      call date(Today)
-      call time(Now)
-      write(IOF,120) Today,Now
+C      call date(Today)
+C      call time(Now)
+C      write(IOF,120) Today,Now
 120   format(
      + 12x,   '_______________________________________________________'
      +,/ ,12x,'|                                                     |'
@@ -2826,9 +2826,9 @@ c***********************************************************************
         a=1.3d0              !a and b are shape factors
         b=5.d0
         do m=1,NMesh/2
-          y1=datand(((m-1)*dx-Length/2.d0)*b/Length)*Pi/180.d0
+          y1=datan(((m-1)*dx-Length/2.d0)*b/Length)
           x(m)=a*Length/Pi*y1+Length/2.d0
-          y2=datand(((NMesh-m+1)*dx-Length/2.d0)*b/Length)*Pi/180.d0
+          y2=datan(((NMesh-m+1)*dx-Length/2.d0)*b/Length)
           x(NMesh-m)=a*Length/Pi*y2+Length/2.d0
         enddo
         if ((NMesh/2)*2.eq.NMesh) x(NMesh/2)=Length/2.d0 !corect for even NMesh
