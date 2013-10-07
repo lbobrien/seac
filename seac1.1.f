@@ -86,7 +86,6 @@ c***********************************************************************
       print *,Bel,Bel,Bel
       close(IBF)             !close batch file
 
-      pause
       stop
       end  ! of SEAC
 
@@ -150,9 +149,9 @@ c***********************************************************************
 10      read (IBF,'(a80)',end=20) InFile
         if ((InFile(1:1).eq.' ').or.(InFile(1:1).eq.'#')) goto 10  !skip
       else
-        type 1
-1       format('Please type the input file name: '$)
-        accept '(a80)',InFile
+        write(*, fmt='("Please type the input file name: ")', 
+     &        ADVANCE="no")
+        read(*, fmt='(a80)') InFile
       endif
 
       open (IIF,file=InFile,status='old',err=30)  !open input data file
@@ -362,7 +361,6 @@ c  gamma, neutron g-values
       if (Error) then
         print *,'Species information missing in the input file.'
         print *,'Program terminated.',Bel,Bel
-        pause
         stop
       endif
       NSp=NofLine(IIF)       !determine NSp
@@ -894,7 +892,6 @@ c     Net Charge Transfer for Wall and Tip Electrochemical Rx
         print *,'--- Please correct input data and try again.'
         print *
         print *,'Please press return to close this window.',Bel
-        pause
         stop
       endif
 
@@ -1640,7 +1637,6 @@ c       print *,'Memory Allocation Error!'
 c       print *,'Please increase application memory size by',
 c    +           (LRW*8-Size)/1024+10,' kb and try again.'
 c       print *,'SEAC Terminated.'
-c       pause
 c       stop
 c     endif
 c     call DisposeMemory(pSpare) !release spare memory
@@ -2664,7 +2660,6 @@ c***********************************************************************
       print *,'Pot(NMesh) =',xx(n),'  at t =',Ti
       print *,'errf =',errf,' /',tolf
       print *,'errx =',errx,' /',tolx
-      pause
 
       end  !of MNewt
 
@@ -2756,13 +2751,13 @@ c***********************************************************************
       integer*4 j
       real*8 bet,gam(IMP)
 
-      if(b(1).eq.0.d0)pause 'tridag: rewrite equations'
+      if(b(1).eq.0.d0)print *, 'tridag: rewrite equations'
       bet=b(1)
       u(1)=u(1)/bet
       do 11 j=2,n
         gam(j)=c(j-1)/bet
         bet=b(j)-a(j)*gam(j)
-        if(bet.eq.0.d0)pause 'tridag failed'
+        if(bet.eq.0.d0)print *, 'tridag failed'
         u(j)=(u(j)-a(j)*u(j-1))/bet
 11    continue
       do 12 j=n-1,1,-1

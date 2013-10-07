@@ -1,0 +1,1 @@
+program = seacsource = $(wildcard *.f)objects = lsode.o seac1.1.oF90 = gfortranF90FLAGS = -fno-align-commonsall: $(program)$(program): $(objects)	$(F90) $(objects) -o $@clean:	@rm -f *.o $(program)neat:	@rm -f *.o	.PHONY: all clean neat%.o: %.f	$(F90) $(F90FLAGS) -c $<
