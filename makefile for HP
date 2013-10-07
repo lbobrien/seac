@@ -1,0 +1,1 @@
+#!/bin/csh#lintfor -V -L seac.f > seac.lisf77 +e seac1.1.f; f77 -o seac seac1.1.o lsode.orm seac1.1.o

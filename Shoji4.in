@@ -1,0 +1,134 @@
+ Shoji4.in
+
+ $FileName
+ OutFile  = 'Shoji4.out'
+ PlotFile = 'Shoji4.plot'
+ $END
+
+ $Time
+ TFinal    =   2.52e8
+ TStep     =   1.5
+ $End
+
+ $Dimension
+ Length    =   0.25
+ WidthMouth=   0.01
+ WidthTip  =   1.e-4
+ NMesh     =   30
+ WallSide  =   2 
+ $END
+
+ $State
+ Temp      =   561.0
+ TempRef   =   561.0
+ ChargeDens=   2.7e4
+ PotMet    =   0.008
+ $END
+
+ $Control
+ SteadyMin =   1.e-3
+ $END
+
+********************************************************************************
+
+ Species   Initial  Charge  Diffu       Mol     Gamma     Neutron
+  Name      Conc            Coef        Wt     G-Values   G-Values
+           (mol/L)         (cm2/s)    (g/mol)  (#/100eV)  (#/100eV)
+ -------- ---------- --- ---------- ---------- ---------- ----------
+ 12345678 +123456789 +12 +123456789 +123456789 +123456789 +123456789
+
+ $Species
+ H+        2.236e-6    1  9.7e-4         1.0    3.76       0.93
+ OH-       2.236e-6   -1  4.8e-4        17.0
+ Na+       3.114e-6    1  2.5e-4        22.99
+ Cl-       3.114e-6   -1  3.8e-4        35.45
+ Fe2+      0.0         2  1.3e-4        55.85
+ Mn2+      0.0         2  1.3e-4        54.9
+ H2S       0.0         0  2.0e-4        34.0
+ HS-       0.0        -1  2.0e-4        33.0
+ $END of Species
+
+********************************************************************************
+
+                     Chemical Reactions                         Rate  Activation
+                                                              Constant  Energy
+            Reactants        >            Products                    (kJ/mol-k)
+ 123 1234567 1234567 1234567 >1234567 1234567 1234567 1234567 +1.23e+45+1.23e+45
+
+ $Reaction
+ W1                          >H+      OH-                      5.0
+ W1b H+      OH-             >                                 1.e12
+ S1  H2S                     >HS-     H+                       5.56e3
+ S1b HS-     H+              >H2S                              1.e10
+ $END of Reaction
+
+********************************************************************************
+
+                    Precipitation Reactions 
+
+            Reactants        >                                  Rate      Ksp 
+ 123 1234567 1234567 1234567 >                                +1.23e+45+1.23e+45
+
+ $PptReaction
+ Fe  Fe2+    OH-     OH-                                       5.e14    1.99e-18
+ Mn  Mn2+    HS-     OH-                                       1.e12    4.56e-16
+ $END of PptReaction
+
+********************************************************************************
+
+            Crevice Tip Electrochemical Reactions                      Partition
+                                                                Rate     Coef
+            Reactants        >            Products             
+ 123 1234567 1234567 1234567 >1234567 1234567 1234567 1234567 +1.23e+45+1.23e+45
+
+ $TipReaction
+ FeA                         >Fe2+                             7.653e-5 0.52564
+ FeS H2S                     >Fe2+    H2S                      42.787   0.39044
+ HC  H+                      >                                 34.227   0.927
+ HSC H2S                     >HS-                              42.787   0.74042
+ $END of TipReaction
+
+********************************************************************************
+
+           Crevice Wall Electrochemical Reactions                      Partition
+                                                                Rate     Coef
+            Reactants        >            Products             
+ 123 1234567 1234567 1234567 >1234567 1234567 1234567 1234567 +1.23e+45+1.23e+41
+
+ $WallReaction
+ $END of WallReaction
+ Same as Tip
+
+********************************************************************************
+
+       PotStd   PotPas    IPas    PotPit   PotPas   PotPit  Lim Cur
+       (Volts)  (Volts)  (A/cm2)  (Volts)   Coef     Coef   (A/cm2)
+ 123 +12345678+12345678+12345678+12345678+12345678+12345678+12345678
+
+ $CorrosionData
+ FeA  -0.86033                                               2.5e-4
+ FeS  -0.95321    -0.2   4.0e-4    0.35                      1.0e-2
+ HC   -0.86033
+ HSC  -0.95321
+ $END of CorrosionData
+
+********************************************************************************
+
+              Crevice Tip Chemical Dissolution                  Flux
+            Reactants        >            Products           (mol/cm2-s)
+ 123 1234567 1234567 1234567 >1234567 1234567 1234567 1234567 +1.23e+45
+
+ $TipDissolution
+ MnS                         >Mn2+    HS-     OH-              1.e-12
+ $END of TipDissolution
+
+********************************************************************************
+
+              Crevice Wall Chemical Dissolution                 Flux
+            Reactants        >            Products           (mol/cm2-s)
+ 123 1234567 1234567 1234567 >1234567 1234567 1234567 1234567 +1.23e+45
+
+ $WallDissolution
+ $END of WallDissolution
+
+********************************************************************************

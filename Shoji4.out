@@ -1,0 +1,1047 @@
+            _______________________________________________________
+            |                                                     |
+            |                      SEAC 1.1                       |
+            |   Simulation of Environmentally-Assisted Cracking   |
+            |                                                     |
+            |                 16-SEP-99  14:31:17                 |
+            _______________________________________________________
+
+_______________________________________________________________________________
+
+
+                                  INPUT DATA
+
+_______________________________________________________________________________
+
+ Shoji4.in                                                                      
+ DifEq v1.1 on HP, 950202
+
+       Input File Name                 = shoji4.in                          
+       Output File Name                = Shoji4.out                         
+       Plot File Name                  = Shoji4.plot                        
+
+       Initial Time                    =   0.000000E+00 sec
+       Final Time                      =   2.520000E+08 sec
+       Time Increment                  =   1.500000E+00 sec
+
+       Crevice Length                  =   2.500000E-01 cm
+       Crevice Width at Mouth          =   1.000000E-02 cm
+       Crevice Width at Tip            =   1.000000E-04 cm
+       Mesh Points for Crevice         =       30
+
+       Temperature                     =     561.000000 Kelvin
+       Reference Temperature           =     561.000000 Kelvin
+       Water Density                   =       0.736349 g/cc
+       Water Viscosity                 =       0.001288 cm2/s
+       Charge Density of Metal         =   27000.000000 Coul/cm3
+
+       Metal Potential                 =       0.008000 Volts
+       Steady state threshold          =   1.000000E-03
+
+       Newton's X     Tolerance        =   1.000000E-10
+                Func  Tolerance        =   1.000000E-20
+                Max   Iteration        =      500
+       lsode Absolute Tolerance        =   1.000000E-15
+             Relative Tolerance        =   1.000000E-06
+             Method Flag               =       25
+
+
+ Species   Initial  Charge  Diffu       Mol      Gamma     Neutron
+  Name      Conc            Coef        Wt      G-Values   G-Values
+           [mol/L]         [cm2/s]    [g/mol]  [#/100eV]  [#/100eV]
+ -------- ---------- --- ---------- ---------- ---------- ----------
+
+ H+       2.2360E-06   1 9.7000E-04   1.000000   3.760000   0.930000
+ OH-      2.2360E-06  -1 4.8000E-04  17.000000   0.000000   0.000000
+ Na+      3.1140E-06   1 2.5000E-04  22.990000   0.000000   0.000000
+ Cl-      3.1140E-06  -1 3.8000E-04  35.450000   0.000000   0.000000
+ Fe2+     0.0000E+00   2 1.3000E-04  55.850000   0.000000   0.000000
+ Mn2+     0.0000E+00   2 1.3000E-04  54.900000   0.000000   0.000000
+ H2S      0.0000E+00   0 2.0000E-04  34.000000   0.000000   0.000000
+ HS-      0.0000E+00  -1 2.0000E-04  33.000000   0.000000   0.000000
+
+
+
+
+_______________________________________________________________________________
+
+
+                    Chemical & Electrochemical Reactions
+
+_______________________________________________________________________________
+
+
+
+                                                                Rate  Activation
+                     Chemical Reactions                       Constant  Energy
+                                                                      (kJ/mol-k)
+
+ W1                          >H+      OH-                      5.00E+00 0.00E+00
+ W1b H+      OH-             >                                 1.00E+12 0.00E+00
+ S1  H2S                     >HS-     H+                       5.56E+03 0.00E+00
+ S1b HS-     H+              >H2S                              1.00E+10 0.00E+00
+
+
+                  Precipitation Reactions                       Rate      Ksp
+
+ Fe  Fe2+    OH-     OH-     >                                 5.00E+14 1.99E-18
+ Mn  Mn2+    HS-     OH-     >                                 1.00E+12 4.56E-16
+
+
+                                                                Rate   Partition
+           Crevice Tip Electrochemical Reactions               Const    Coef
+
+ FeA                         >Fe2+                             7.65E-05 5.26E-01
+ FeS H2S                     >Fe2+    H2S                      4.28E+01 3.90E-01
+ HC  H+                      >                                 3.42E+01 9.27E-01
+ HSC H2S                     >HS-                              4.28E+01 7.40E-01
+
+
+                           Corrosion Data
+
+      PotStd   PotPas     IPas     PotPit   PotPas   PotPit    ILimit
+      (Volts)  (Volts)   (A/cm2)   (Volts)   Coef     Coef     (A/cm2)
+      -------  -------  ---------  -------  -------  -------  ---------
+ FeA -0.86033  0.00000  0.000E+00  0.00000  0.00000  0.00000  2.500E-04
+ FeS -0.95321 -0.20000  4.000E-04  0.35000  0.00000  0.00000  1.000E-02
+ HC  -0.86033  0.00000  0.000E+00  0.00000  0.00000  0.00000  0.000E+00
+ HSC -0.95321  0.00000  0.000E+00  0.00000  0.00000  0.00000  0.000E+00
+
+
+            Crevice Tip Chemical Dissolutions                   Flux
+
+ MnS                         >Mn2+    HS-     OH-              1.00E-12
+
+
+
+
+_______________________________________________________________________________
+
+
+                         Concentrations and Potential
+
+_______________________________________________________________________________
+
+          Concentrations [moles/liter] at Time = 0.0000E+00 sec
+
+ At x = 8.33333E-03 cm,  ECP =  0.0063461 V,  Time = 0.00000E+00 sec
+
+     H+       =    2.236000E-06 **     OH-      =    2.236000E-06 **
+     Na+      =    3.114000E-06 **     Cl-      =    3.114000E-06 **
+     Fe2+     =    0.000000E+00 **     Mn2+     =    0.000000E+00 **
+     H2S      =    0.000000E+00 **     HS-      =    0.000000E+00 **
+
+     Conductivity (Siemens/cm)  =   1.038630E-05
+     Total Current (A/cm2)      =  -2.132927E-06
+     Total Charge (equiv/liter) =   0.000000E+00 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 1.25000E-01 cm,  ECP = -0.0256693 V,  Time = 0.00000E+00 sec
+
+     H+       =    2.236000E-06 **     OH-      =    2.236000E-06 **
+     Na+      =    3.114000E-06 **     Cl-      =    3.114000E-06 **
+     Fe2+     =    0.000000E+00 **     Mn2+     =    0.000000E+00 **
+     H2S      =    0.000000E+00 **     HS-      =    0.000000E+00 **
+
+     Conductivity (Siemens/cm)  =   1.038630E-05
+     Total Current (A/cm2)      =  -4.150148E-06
+     Total Charge (equiv/liter) =   0.000000E+00 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 2.50000E-01 cm,  ECP = -0.2073722 V,  Time = 0.00000E+00 sec
+
+     H+       =    2.236000E-06 **     OH-      =    2.236000E-06 **
+     Na+      =    3.114000E-06 **     Cl-      =    3.114000E-06 **
+     Fe2+     =    0.000000E+00 **     Mn2+     =    0.000000E+00 **
+     H2S      =    0.000000E+00 **     HS-      =    0.000000E+00 **
+
+     Conductivity (Siemens/cm)  =   1.038630E-05
+     Total Current (A/cm2)      =  -2.027347E-04
+     Total Charge (equiv/liter) =   0.000000E+00 *
+     Net Wall Current (A)       =   2.027347E-08
+     Anodic Curr Dens (A/cm2)   =   2.027350E-04
+
+     Tot Wall/Ext/Int Curnt (A) =   2.027347E-08 / 0.000000E+00 / 2.027347E-08
+     RefE Pot/IR Drop/Polar (V) =   0.008000     / 0.000000     / 0.008000
+     Crack Growth Rate (cm/s)   =   7.508705E-09
+
+     Number of lsode steps/DifEq calls/jacobian evals  =     0 /    0 /    0
+_______________________________________________________________________________
+
+          Concentrations [moles/liter] at Time = 1.5000E+00 sec
+
+ At x = 8.33333E-03 cm,  ECP =  0.0045414 V,  Time = 1.50000E+00 sec
+
+     H+       =    2.236058E-06 **     OH-      =    2.236078E-06 **
+     Na+      =    3.114010E-06 **     Cl-      =    3.113990E-06 **
+     Fe2+     =    3.660866E-25 **     Mn2+     =    1.389383E-27 **
+     H2S      =    7.267064E-26 **     HS-      =    1.806919E-26 **
+
+     Conductivity (Siemens/cm)  =   1.038648E-05
+     Total Current (A/cm2)      =  -4.460668E-06
+     Total Charge (equiv/liter) =  -1.763777E-16 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 1.25000E-01 cm,  ECP = -0.0624046 V,  Time = 1.50000E+00 sec
+
+     H+       =    2.236964E-06 **     OH-      =    2.235172E-06 **
+     Na+      =    3.113195E-06 **     Cl-      =    3.114989E-06 **
+     Fe2+     =    9.589234E-13 **     Mn2+     =    3.645697E-15 **
+     H2S      =    3.174939E-15 **     HS-      =    7.891121E-16 **
+
+     Conductivity (Siemens/cm)  =   1.038772E-05
+     Total Current (A/cm2)      =  -8.679355E-06
+     Total Charge (equiv/liter) =  -1.246795E-16 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 2.50000E-01 cm,  ECP = -0.2905588 V,  Time = 1.50000E+00 sec
+
+     H+       =    9.397135E-06 **     OH-      =    5.320033E-07 **
+     Na+      =    2.753198E-07 **     Cl-      =    2.832870E-05 **
+     Fe2+     =    9.580534E-06 **     Mn2+     =    1.439650E-08 **
+     H2S      =    2.722435E-08 **     HS-      =    1.613407E-09 **
+
+     Conductivity (Siemens/cm)  =   5.028274E-05
+     Total Current (A/cm2)      =  -4.239865E-04
+     Total Charge (equiv/liter) =  -5.623026E-12 *
+     Net Wall Current (A)       =   4.239865E-08
+     Anodic Curr Dens (A/cm2)   =   4.239923E-04
+
+     Tot Wall/Ext/Int Curnt (A) =   4.239865E-08 / 0.000000E+00 / 4.239865E-08
+     RefE Pot/IR Drop/Polar (V) =   0.008000     / 0.000000     / 0.008000
+     Crack Growth Rate (cm/s)   =   1.570342E-08
+
+     Number of lsode steps/DifEq calls/jacobian evals  =   310 / 2948 /   80
+_______________________________________________________________________________
+
+          Concentrations [moles/liter] at Time = 2.2500E+00 sec
+
+ At x = 8.33333E-03 cm,  ECP =  0.0043390 V,  Time = 2.25000E+00 sec
+
+     H+       =    2.236058E-06 **     OH-      =    2.236078E-06 **
+     Na+      =    3.114010E-06 **     Cl-      =    3.113990E-06 **
+     Fe2+     =    5.422735E-21 **     Mn2+     =    2.061521E-23 **
+     H2S      =    3.852710E-22 **     HS-      =    9.579641E-23 **
+
+     Conductivity (Siemens/cm)  =   1.038648E-05
+     Total Current (A/cm2)      =  -4.721676E-06
+     Total Charge (equiv/liter) =  -1.825701E-16 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 1.25000E-01 cm,  ECP = -0.0664620 V,  Time = 2.25000E+00 sec
+
+     H+       =    2.243933E-06 **     OH-      =    2.228231E-06 **
+     Na+      =    3.105537E-06 **     Cl-      =    3.121355E-06 **
+     Fe2+     =    5.766147E-11 **     Mn2+     =    2.156331E-13 **
+     H2S      =    1.126753E-13 **     HS-      =    2.791802E-14 **
+
+     Conductivity (Siemens/cm)  =   1.039563E-05
+     Total Current (A/cm2)      =  -9.187213E-06
+     Total Charge (equiv/liter) =  -8.120783E-15 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 2.50000E-01 cm,  ECP = -0.2887126 V,  Time = 2.25000E+00 sec
+
+     H+       =    1.022415E-05 **     OH-      =    4.889684E-07 **
+     Na+      =    2.284980E-07 **     Cl-      =    3.279927E-05 **
+     Fe2+     =    1.140351E-05 **     Mn2+     =    1.509258E-08 **
+     H2S      =    2.967538E-08 **     HS-      =    1.616195E-09 **
+
+     Conductivity (Siemens/cm)  =   5.710241E-05
+     Total Current (A/cm2)      =  -4.487953E-04
+     Total Charge (equiv/liter) =  -2.043087E-12 *
+     Net Wall Current (A)       =   4.487953E-08
+     Anodic Curr Dens (A/cm2)   =   4.488015E-04
+
+     Tot Wall/Ext/Int Curnt (A) =   4.487953E-08 / 0.000000E+00 / 4.487953E-08
+     RefE Pot/IR Drop/Polar (V) =   0.008000     / 0.000000     / 0.008000
+     Crack Growth Rate (cm/s)   =   1.662228E-08
+
+     Number of lsode steps/DifEq calls/jacobian evals  =    38 /  436 /   12
+_______________________________________________________________________________
+
+          Concentrations [moles/liter] at Time = 3.3750E+00 sec
+
+ At x = 8.33333E-03 cm,  ECP =  0.0041071 V,  Time = 3.37500E+00 sec
+
+     H+       =    2.236071E-06 **     OH-      =    2.236065E-06 **
+     Na+      =    3.114000E-06 **     Cl-      =    3.114006E-06 **
+     Fe2+     =    2.813550E-17 **     Mn2+     =    1.062184E-19 **
+     H2S      =    5.839359E-19 **     HS-      =    1.451936E-19 **
+
+     Conductivity (Siemens/cm)  =   1.038650E-05
+     Total Current (A/cm2)      =  -5.020922E-06
+     Total Charge (equiv/liter) =  -2.702340E-16 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 1.25000E-01 cm,  ECP = -0.0708916 V,  Time = 3.37500E+00 sec
+
+     H+       =    2.275459E-06 **     OH-      =    2.197359E-06 **
+     Na+      =    3.063294E-06 **     Cl-      =    3.144627E-06 **
+     Fe2+     =    1.611337E-09 **     Mn2+     =    5.784256E-12 **
+     H2S      =    1.943083E-12 **     HS-      =    4.747783E-13 **
+
+     Conductivity (Siemens/cm)  =   1.042527E-05
+     Total Current (A/cm2)      =  -9.769470E-06
+     Total Charge (equiv/liter) =  -4.979777E-14 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 2.50000E-01 cm,  ECP = -0.2857852 V,  Time = 3.37500E+00 sec
+
+     H+       =    1.112914E-05 **     OH-      =    4.492053E-07 **
+     Na+      =    1.881170E-07 **     Cl-      =    3.808234E-05 **
+     Fe2+     =    1.359214E-05 **     Mn2+     =    1.581133E-08 **
+     H2S      =    3.218057E-08 **     HS-      =    1.609929E-09 **
+
+     Conductivity (Siemens/cm)  =   6.507507E-05
+     Total Current (A/cm2)      =  -4.772386E-04
+     Total Charge (equiv/liter) =   3.427687E-13 *
+     Net Wall Current (A)       =   4.772386E-08
+     Anodic Curr Dens (A/cm2)   =   4.772449E-04
+
+     Tot Wall/Ext/Int Curnt (A) =   4.772386E-08 / 0.000000E+00 / 4.772386E-08
+     RefE Pot/IR Drop/Polar (V) =   0.008000     / 0.000000     / 0.008000
+     Crack Growth Rate (cm/s)   =   1.767574E-08
+
+     Number of lsode steps/DifEq calls/jacobian evals  =    44 /  572 /   16
+_______________________________________________________________________________
+
+          Concentrations [moles/liter] at Time = 5.0625E+00 sec
+
+ At x = 8.33333E-03 cm,  ECP =  0.0038398 V,  Time = 5.06250E+00 sec
+
+     H+       =    2.236376E-06 **     OH-      =    2.235760E-06 **
+     Na+      =    3.113704E-06 **     Cl-      =    3.114320E-06 **
+     Fe2+     =    3.938286E-14 **     Mn2+     =    1.444911E-16 **
+     H2S      =    2.142871E-16 **     HS-      =    5.327462E-17 **
+
+     Conductivity (Siemens/cm)  =   1.038689E-05
+     Total Current (A/cm2)      =  -5.368693E-06
+     Total Charge (equiv/liter) =  -2.422442E-16 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 1.25000E-01 cm,  ECP = -0.0755675 V,  Time = 5.06250E+00 sec
+
+     H+       =    2.361833E-06 **     OH-      =    2.117000E-06 **
+     Na+      =    2.919132E-06 **     Cl-      =    3.203988E-06 **
+     Fe2+     =    1.994608E-08 **     Mn2+     =    6.713503E-11 **
+     H2S      =    1.733033E-11 **     HS-      =    4.079700E-12 **
+
+     Conductivity (Siemens/cm)  =   1.050769E-05
+     Total Current (A/cm2)      =  -1.044615E-05
+     Total Charge (equiv/liter) =  -2.003383E-14 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 2.50000E-01 cm,  ECP = -0.2816432 V,  Time = 5.06250E+00 sec
+
+     H+       =    1.212666E-05 **     OH-      =    4.122523E-07 **
+     Na+      =    1.532955E-07 **     Cl-      =    4.438709E-05 **
+     Fe2+     =    1.624394E-05 **     Mn2+     =    1.654810E-08 **
+     H2S      =    3.472747E-08 **     HS-      =    1.594272E-09 **
+
+     Conductivity (Siemens/cm)  =   7.448792E-05
+     Total Current (A/cm2)      =  -5.102943E-04
+     Total Charge (equiv/liter) =  -7.158922E-13 *
+     Net Wall Current (A)       =   5.102943E-08
+     Anodic Curr Dens (A/cm2)   =   5.103007E-04
+
+     Tot Wall/Ext/Int Curnt (A) =   5.102943E-08 / 0.000000E+00 / 5.102943E-08
+     RefE Pot/IR Drop/Polar (V) =   0.008000     / 0.000000     / 0.008000
+     Crack Growth Rate (cm/s)   =   1.890002E-08
+
+     Number of lsode steps/DifEq calls/jacobian evals  =    57 /  685 /   19
+_______________________________________________________________________________
+
+          Concentrations [moles/liter] at Time = 7.5938E+00 sec
+
+ At x = 8.33333E-03 cm,  ECP =  0.0035433 V,  Time = 7.59375E+00 sec
+
+     H+       =    2.239064E-06 **     OH-      =    2.233076E-06 **
+     Na+      =    3.110250E-06 **     Cl-      =    3.116263E-06 **
+     Fe2+     =    1.212861E-11 **     Mn2+     =    4.217160E-14 **
+     H2S      =    1.905568E-14 **     HS-      =    4.731811E-15 **
+
+     Conductivity (Siemens/cm)  =   1.038928E-05
+     Total Current (A/cm2)      =  -5.779280E-06
+     Total Charge (equiv/liter) =  -1.734100E-15 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 1.25000E-01 cm,  ECP = -0.0805502 V,  Time = 7.59375E+00 sec
+
+     H+       =    2.520868E-06 **     OH-      =    1.983444E-06 **
+     Na+      =    2.584087E-06 **     Cl-      =    3.352106E-06 **
+     Fe2+     =    1.149519E-07 **     Mn2+     =    3.552256E-10 **
+     H2S      =    9.029111E-11 **     HS-      =    1.991434E-11 **
+
+     Conductivity (Siemens/cm)  =   1.073169E-05
+     Total Current (A/cm2)      =  -1.124505E-05
+     Total Charge (equiv/liter) =  -3.146381E-14 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 2.50000E-01 cm,  ECP = -0.2761205 V,  Time = 7.59375E+00 sec
+
+     H+       =    1.323620E-05 **     OH-      =    3.776934E-07 **
+     Na+      =    1.232404E-07 **     Cl-      =    5.200503E-05 **
+     Fe2+     =    1.949513E-05 **     Mn2+     =    1.729876E-08 **
+     H2S      =    3.730529E-08 **     HS-      =    1.568913E-09 **
+
+     Conductivity (Siemens/cm)  =   8.574029E-05
+     Total Current (A/cm2)      =  -5.493206E-04
+     Total Charge (equiv/liter) =  -8.862468E-12 *
+     Net Wall Current (A)       =   5.493206E-08
+     Anodic Curr Dens (A/cm2)   =   5.493268E-04
+
+     Tot Wall/Ext/Int Curnt (A) =   5.493206E-08 / 0.000000E+00 / 5.493206E-08
+     RefE Pot/IR Drop/Polar (V) =   0.008000     / 0.000000     / 0.008000
+     Crack Growth Rate (cm/s)   =   2.034544E-08
+
+     Number of lsode steps/DifEq calls/jacobian evals  =    70 / 1026 /   29
+_______________________________________________________________________________
+
+          Concentrations [moles/liter] at Time = 1.1391E+01 sec
+
+ At x = 8.33333E-03 cm,  ECP =  0.0032501 V,  Time = 1.13906E+01 sec
+
+     H+       =    2.249860E-06 **     OH-      =    2.222360E-06 **
+     Na+      =    3.091578E-06 **     Cl-      =    3.120669E-06 **
+     Fe2+     =    7.931353E-10 **     Mn2+     =    2.549214E-12 **
+     H2S      =    4.904163E-13 **     HS-      =    1.211933E-13 **
+
+     Conductivity (Siemens/cm)  =   1.039476E-05
+     Total Current (A/cm2)      =  -6.272573E-06
+     Total Charge (equiv/liter) =  -8.379660E-15 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 1.25000E-01 cm,  ECP = -0.0858342 V,  Time = 1.13906E+01 sec
+
+     H+       =    2.760496E-06 **     OH-      =    1.811269E-06 **
+     Na+      =    2.048327E-06 **     Cl-      =    3.707770E-06 **
+     Fe2+     =    3.541530E-07 **     Mn2+     =    9.865681E-10 **
+     H2S      =    3.134420E-10 **     HS-      =    6.313095E-11 **
+
+     Conductivity (Siemens/cm)  =   1.128200E-05
+     Total Current (A/cm2)      =  -1.220487E-05
+     Total Charge (equiv/liter) =  -9.226982E-14 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 2.50000E-01 cm,  ECP = -0.2690150 V,  Time = 1.13906E+01 sec
+
+     H+       =    1.448472E-05 **     OH-      =    3.451360E-07 **
+     Na+      =    9.727514E-08 **     Cl-      =    6.135643E-05 **
+     Fe2+     =    2.354249E-05 **     Mn2+     =    1.806061E-08 **
+     H2S      =    3.990487E-08 **     HS-      =    1.533462E-09 **
+
+     Conductivity (Siemens/cm)  =   9.940667E-05
+     Total Current (A/cm2)      =  -5.962081E-04
+     Total Charge (equiv/liter) =  -7.834040E-12 *
+     Net Wall Current (A)       =   5.962081E-08
+     Anodic Curr Dens (A/cm2)   =   5.962140E-04
+
+     Tot Wall/Ext/Int Curnt (A) =   5.962081E-08 / 0.000000E+00 / 5.962081E-08
+     RefE Pot/IR Drop/Polar (V) =   0.008000     / 0.000000     / 0.008000
+     Crack Growth Rate (cm/s)   =   2.208200E-08
+
+     Number of lsode steps/DifEq calls/jacobian evals  =    78 / 1232 /   35
+_______________________________________________________________________________
+
+          Concentrations [moles/liter] at Time = 1.7086E+01 sec
+
+ At x = 8.33333E-03 cm,  ECP =  0.0029319 V,  Time = 1.70859E+01 sec
+
+     H+       =    2.270583E-06 **     OH-      =    2.202077E-06 **
+     Na+      =    3.033859E-06 **     Cl-      =    3.128326E-06 **
+     Fe2+     =    1.294366E-08 **     Mn2+     =    3.752265E-11 **
+     H2S      =    4.776855E-12 **     HS-      =    1.169696E-12 **
+
+     Conductivity (Siemens/cm)  =   1.040510E-05
+     Total Current (A/cm2)      =  -6.874026E-06
+     Total Charge (equiv/liter) =  -1.245341E-13 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 1.25000E-01 cm,  ECP = -0.0905284 V,  Time = 1.70859E+01 sec
+
+     H+       =    3.132720E-06 **     OH-      =    1.596057E-06 **
+     Na+      =    1.451703E-06 **     Cl-      =    4.414887E-06 **
+     Fe2+     =    7.115698E-07 **     Mn2+     =    1.762465E-09 **
+     H2S      =    8.092844E-10 **     HS-      =    1.436325E-10 **
+
+     Conductivity (Siemens/cm)  =   1.240681E-05
+     Total Current (A/cm2)      =  -1.337515E-05
+     Total Charge (equiv/liter) =  -3.219501E-13 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 2.50000E-01 cm,  ECP = -0.2601461 V,  Time = 1.70859E+01 sec
+
+     H+       =    1.590580E-05 **     OH-      =    3.142984E-07 **
+     Na+      =    7.490783E-08 **     Cl-      =    7.302503E-05 **
+     Fe2+     =    2.866121E-05 **     Mn2+     =    1.883371E-08 **
+     H2S      =    4.251830E-08 **     HS-      =    1.487808E-09 **
+
+     Conductivity (Siemens/cm)  =   1.162799E-04
+     Total Current (A/cm2)      =  -6.533762E-04
+     Total Charge (equiv/liter) =  -1.078576E-11 *
+     Net Wall Current (A)       =   6.533762E-08
+     Anodic Curr Dens (A/cm2)   =   6.533817E-04
+
+     Tot Wall/Ext/Int Curnt (A) =   6.533762E-08 / 0.000000E+00 / 6.533762E-08
+     RefE Pot/IR Drop/Polar (V) =   0.008000     / 0.000000     / 0.008000
+     Crack Growth Rate (cm/s)   =   2.419932E-08
+
+     Number of lsode steps/DifEq calls/jacobian evals  =   113 / 1889 /   54
+_______________________________________________________________________________
+
+          Concentrations [moles/liter] at Time = 2.5629E+01 sec
+
+ At x = 8.33333E-03 cm,  ECP =  0.0023556 V,  Time = 2.56289E+01 sec
+
+     H+       =    2.287315E-06 **     OH-      =    2.185970E-06 **
+     Na+      =    2.918982E-06 **     Cl-      =    3.158766E-06 **
+     Fe2+     =    6.904614E-08 **     Mn2+     =    1.762415E-10 **
+     H2S      =    2.290872E-11 **     HS-      =    5.568553E-12 **
+
+     Conductivity (Siemens/cm)  =   1.044620E-05
+     Total Current (A/cm2)      =  -7.611869E-06
+     Total Charge (equiv/liter) =  -5.439477E-14 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 1.25000E-01 cm,  ECP = -0.0931029 V,  Time = 2.56289E+01 sec
+
+     H+       =    3.738890E-06 **     OH-      =    1.337295E-06 **
+     Na+      =    9.544325E-07 **     Cl-      =    5.586290E-06 **
+     Fe2+     =    1.112785E-06 **     Mn2+     =    2.471200E-09 **
+     H2S      =    1.681857E-09 **     HS-      =    2.501039E-10 **
+
+     Conductivity (Siemens/cm)  =   1.438989E-05
+     Total Current (A/cm2)      =  -1.481081E-05
+     Total Charge (equiv/liter) =   1.399961E-13 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 2.50000E-01 cm,  ECP = -0.2494604 V,  Time = 2.56289E+01 sec
+
+     H+       =    1.753263E-05 **     OH-      =    2.851333E-07 **
+     Na+      =    5.582858E-08 **     Cl-      =    8.774452E-05 **
+     Fe2+     =    3.520168E-05 **     Mn2+     =    1.961927E-08 **
+     H2S      =    4.513964E-08 **     HS-      =    1.432882E-09 **
+
+     Conductivity (Siemens/cm)  =   1.373440E-04
+     Total Current (A/cm2)      =  -7.235082E-04
+     Total Charge (equiv/liter) =  -2.133510E-11 *
+     Net Wall Current (A)       =   7.235082E-08
+     Anodic Curr Dens (A/cm2)   =   7.235131E-04
+
+     Tot Wall/Ext/Int Curnt (A) =   7.235082E-08 / 0.000000E+00 / 7.235082E-08
+     RefE Pot/IR Drop/Polar (V) =   0.008000     / 0.000000     / 0.008000
+     Crack Growth Rate (cm/s)   =   2.679678E-08
+
+     Number of lsode steps/DifEq calls/jacobian evals  =   123 / 2023 /   58
+_______________________________________________________________________________
+
+          Concentrations [moles/liter] at Time = 3.8443E+01 sec
+
+ At x = 8.33333E-03 cm,  ECP =  0.0015610 V,  Time = 3.84434E+01 sec
+
+     H+       =    2.304193E-06 **     OH-      =    2.169957E-06 **
+     Na+      =    2.787390E-06 **     Cl-      =    3.231523E-06 **
+     Fe2+     =    1.545943E-07 **     Mn2+     =    3.619043E-10 **
+     H2S      =    6.693030E-11 **     HS-      =    1.614991E-11 **
+
+     Conductivity (Siemens/cm)  =   1.054204E-05
+     Total Current (A/cm2)      =  -8.507768E-06
+     Total Charge (equiv/liter) =  -3.290849E-13 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 1.25000E-01 cm,  ECP = -0.0933900 V,  Time = 3.84434E+01 sec
+
+     H+       =    4.566528E-06 **     OH-      =    1.094924E-06 **
+     Na+      =    6.187945E-07 **     Cl-      =    7.416095E-06 **
+     Fe2+     =    1.660003E-06 **     Mn2+     =    3.025327E-09 **
+     H2S      =    2.958624E-09 **     HS-      =    3.602285E-10 **
+
+     Conductivity (Siemens/cm)  =   1.754877E-05
+     Total Current (A/cm2)      =  -1.655401E-05
+     Total Charge (equiv/liter) =   2.118214E-13 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 2.50000E-01 cm,  ECP = -0.2372017 V,  Time = 3.84434E+01 sec
+
+     H+       =    1.938232E-05 **     OH-      =    2.579207E-07 **
+     Na+      =    4.050486E-08 **     Cl-      =    1.062639E-04 **
+     Fe2+     =    4.352976E-05 **     Mn2+     =    2.041753E-08 **
+     H2S      =    4.776566E-08 **     HS-      =    1.371466E-09 **
+
+     Conductivity (Siemens/cm)  =   1.635804E-04
+     Total Current (A/cm2)      =  -8.086634E-04
+     Total Charge (equiv/liter) =  -1.850934E-11 *
+     Net Wall Current (A)       =   8.086634E-08
+     Anodic Curr Dens (A/cm2)   =   8.086677E-04
+
+     Tot Wall/Ext/Int Curnt (A) =   8.086634E-08 / 0.000000E+00 / 8.086634E-08
+     RefE Pot/IR Drop/Polar (V) =   0.008000     / 0.000000     / 0.008000
+     Crack Growth Rate (cm/s)   =   2.995065E-08
+
+     Number of lsode steps/DifEq calls/jacobian evals  =   222 / 3791 /  109
+_______________________________________________________________________________
+
+          Concentrations [moles/liter] at Time = 5.7665E+01 sec
+
+ At x = 8.33333E-03 cm,  ECP =  0.0009322 V,  Time = 5.76650E+01 sec
+
+     H+       =    2.342019E-06 **     OH-      =    2.134910E-06 **
+     Na+      =    2.707514E-06 **     Cl-      =    3.319631E-06 **
+     Fe2+     =    2.020436E-07 **     Mn2+     =    4.771578E-10 **
+     H2S      =    1.374846E-10 **     HS-      =    3.263834E-11 **
+
+     Conductivity (Siemens/cm)  =   1.065803E-05
+     Total Current (A/cm2)      =  -9.524548E-06
+     Total Charge (equiv/liter) =   5.816355E-15 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 1.25000E-01 cm,  ECP = -0.0923562 V,  Time = 5.76650E+01 sec
+
+     H+       =    5.557804E-06 **     OH-      =    8.996359E-07 **
+     Na+      =    4.537755E-07 **     Cl-      =    1.003640E-05 **
+     Fe2+     =    2.458991E-06 **     Mn2+     =    3.463465E-09 **
+     H2S      =    4.543383E-09 **     HS-      =    4.545177E-10 **
+
+     Conductivity (Siemens/cm)  =   2.201538E-05
+     Total Current (A/cm2)      =  -1.853241E-05
+     Total Charge (equiv/liter) =   1.535413E-13 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 2.50000E-01 cm,  ECP = -0.2246137 V,  Time = 5.76650E+01 sec
+
+     H+       =    2.139122E-05 **     OH-      =    2.336972E-07 **
+     Na+      =    3.170553E-08 **     Cl-      =    1.284844E-04 **
+     Fe2+     =    5.362699E-05 **     Mn2+     =    2.123529E-08 **
+     H2S      =    5.037131E-08 **     HS-      =    1.310392E-09 **
+
+     Conductivity (Siemens/cm)  =   1.947742E-04
+     Total Current (A/cm2)      =  -9.053083E-04
+     Total Charge (equiv/liter) =  -3.361628E-11 *
+     Net Wall Current (A)       =   9.053083E-08
+     Anodic Curr Dens (A/cm2)   =   9.053120E-04
+
+     Tot Wall/Ext/Int Curnt (A) =   9.053083E-08 / 0.000000E+00 / 9.053083E-08
+     RefE Pot/IR Drop/Polar (V) =   0.008000     / 0.000000     / 0.008000
+     Crack Growth Rate (cm/s)   =   3.353007E-08
+
+     Number of lsode steps/DifEq calls/jacobian evals  =    87 / 1487 /   43
+_______________________________________________________________________________
+
+          Concentrations [moles/liter] at Time = 8.6498E+01 sec
+
+ At x = 8.33333E-03 cm,  ECP =  0.0003088 V,  Time = 8.64976E+01 sec
+
+     H+       =    2.383581E-06 **     OH-      =    2.097684E-06 **
+     Na+      =    2.658541E-06 **     Cl-      =    3.434031E-06 **
+     Fe2+     =    2.443054E-07 **     Mn2+     =    5.173874E-10 **
+     H2S      =    2.190517E-10 **     HS-      =    5.109514E-11 **
+
+     Conductivity (Siemens/cm)  =   1.080906E-05
+     Total Current (A/cm2)      =  -1.057241E-05
+     Total Charge (equiv/liter) =   1.089519E-12 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 1.25000E-01 cm,  ECP = -0.0903480 V,  Time = 8.64976E+01 sec
+
+     H+       =    6.636708E-06 **     OH-      =    7.533853E-07 **
+     Na+      =    4.114779E-07 **     Cl-      =    1.331493E-05 **
+     Fe2+     =    3.506482E-06 **     Mn2+     =    3.843770E-09 **
+     H2S      =    6.186194E-09 **     HS-      =    5.182576E-10 **
+
+     Conductivity (Siemens/cm)  =   2.751689E-05
+     Total Current (A/cm2)      =  -2.057130E-05
+     Total Charge (equiv/liter) =   1.321570E-12 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 2.50000E-01 cm,  ECP = -0.2130139 V,  Time = 8.64976E+01 sec
+
+     H+       =    2.338643E-05 **     OH-      =    2.137580E-07 **
+     Na+      =    3.166598E-08 **     Cl-      =    1.527135E-04 **
+     Fe2+     =    6.473312E-05 **     Mn2+     =    2.201545E-08 **
+     H2S      =    5.281946E-08 **     HS-      =    1.256797E-09 **
+
+     Conductivity (Siemens/cm)  =   2.285204E-04
+     Total Current (A/cm2)      =  -1.004908E-03
+     Total Charge (equiv/liter) =  -1.294689E-10 *
+     Net Wall Current (A)       =   1.004908E-07
+     Anodic Curr Dens (A/cm2)   =   1.004911E-03
+
+     Tot Wall/Ext/Int Curnt (A) =   1.004908E-07 / 0.000000E+00 / 1.004908E-07
+     RefE Pot/IR Drop/Polar (V) =   0.008000     / 0.000000     / 0.008000
+     Crack Growth Rate (cm/s)   =   3.721894E-08
+
+     Number of lsode steps/DifEq calls/jacobian evals  =    49 /  674 /   19
+_______________________________________________________________________________
+
+          Concentrations [moles/liter] at Time = 1.2975E+02 sec
+
+ At x = 8.33333E-03 cm,  ECP = -0.0002224 V,  Time = 1.29746E+02 sec
+
+     H+       =    2.424838E-06 **     OH-      =    2.061994E-06 **
+     Na+      =    2.626137E-06 **     Cl-      =    3.559677E-06 **
+     Fe2+     =    2.848469E-07 **     Mn2+     =    5.339650E-10 **
+     H2S      =    2.894140E-10 **     HS-      =    6.635874E-11 **
+
+     Conductivity (Siemens/cm)  =   1.097597E-05
+     Total Current (A/cm2)      =  -1.149859E-05
+     Total Charge (equiv/liter) =   4.923171E-13 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 1.25000E-01 cm,  ECP = -0.0880321 V,  Time = 1.29746E+02 sec
+
+     H+       =    7.645709E-06 **     OH-      =    6.539615E-07 **
+     Na+      =    4.211239E-07 **     Cl-      =    1.672844E-05 **
+     Fe2+     =    4.653896E-06 **     Mn2+     =    4.164602E-09 **
+     H2S      =    7.538586E-09 **     HS-      =    5.482100E-10 **
+
+     Conductivity (Siemens/cm)  =   3.315983E-05
+     Total Current (A/cm2)      =  -2.237341E-05
+     Total Charge (equiv/liter) =   2.514205E-12 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 2.50000E-01 cm,  ECP = -0.2035639 V,  Time = 1.29746E+02 sec
+
+     H+       =    2.510819E-05 **     OH-      =    1.990989E-07 **
+     Na+      =    3.725308E-08 **     Cl-      =    1.753203E-04 **
+     Fe2+     =    7.516469E-05 **     Mn2+     =    2.267713E-08 **
+     H2S      =    5.476659E-08 **     HS-      =    1.213730E-09 **
+
+     Conductivity (Siemens/cm)  =   2.598145E-04
+     Total Current (A/cm2)      =  -1.092941E-03
+     Total Charge (equiv/liter) =  -4.305318E-10 *
+     Net Wall Current (A)       =   1.092941E-07
+     Anodic Curr Dens (A/cm2)   =   1.092944E-03
+
+     Tot Wall/Ext/Int Curnt (A) =   1.092941E-07 / 0.000000E+00 / 1.092941E-07
+     RefE Pot/IR Drop/Polar (V) =   0.008000     / 0.000000     / 0.008000
+     Crack Growth Rate (cm/s)   =   4.047941E-08
+
+     Number of lsode steps/DifEq calls/jacobian evals  =    21 /  175 /    4
+_______________________________________________________________________________
+
+          Concentrations [moles/liter] at Time = 1.9462E+02 sec
+
+ At x = 8.33333E-03 cm,  ECP =  0.0034850 V,  Time = 1.94620E+02 sec
+
+     H+       =    2.408430E-06 **     OH-      =    2.076042E-06 **
+     Na+      =    2.824866E-06 **     Cl-      =    3.610296E-06 **
+     Fe2+     =    2.260876E-07 **     Mn2+     =    4.723101E-10 **
+     H2S      =    3.343482E-10 **     HS-      =    7.718446E-11 **
+
+     Conductivity (Siemens/cm)  =   1.103416E-05
+     Total Current (A/cm2)      =  -6.508107E-06
+     Total Charge (equiv/liter) =   6.794641E-13 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 1.25000E-01 cm,  ECP = -0.0450047 V,  Time = 1.94620E+02 sec
+
+     H+       =    6.875018E-06 **     OH-      =    7.272707E-07 **
+     Na+      =    9.374441E-07 **     Cl-      =    1.462151E-05 **
+     Fe2+     =    3.762779E-06 **     Mn2+     =    5.708636E-09 **
+     H2S      =    8.104453E-09 **     HS-      =    6.554274E-10 **
+
+     Conductivity (Siemens/cm)  =   2.947457E-05
+     Total Current (A/cm2)      =  -1.266316E-05
+     Total Charge (equiv/liter) =   1.680283E-12 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 2.50000E-01 cm,  ECP = -0.1331821 V,  Time = 1.94620E+02 sec
+
+     H+       =    1.922873E-05 **     OH-      =    2.599912E-07 **
+     Na+      =    1.377691E-07 **     Cl-      =    9.888685E-05 **
+     Fe2+     =    3.986514E-05 **     Mn2+     =    2.550400E-08 **
+     H2S      =    5.545286E-08 **     HS-      =    1.604692E-09 **
+
+     Conductivity (Siemens/cm)  =   1.539408E-04
+     Total Current (A/cm2)      =  -6.185956E-04
+     Total Charge (equiv/liter) =  -6.582204E-10 *
+     Net Wall Current (A)       =   6.185956E-08
+     Anodic Curr Dens (A/cm2)   =   6.185962E-04
+
+     Tot Wall/Ext/Int Curnt (A) =   6.185956E-08 / 0.000000E+00 / 6.185956E-08
+     RefE Pot/IR Drop/Polar (V) =   0.008000     / 0.000000     / 0.008000
+     Crack Growth Rate (cm/s)   =   2.291097E-08
+
+     Number of lsode steps/DifEq calls/jacobian evals  =   215 / 2361 /   65
+_______________________________________________________________________________
+
+          Concentrations [moles/liter] at Time = 2.9193E+02 sec
+
+ At x = 8.33333E-03 cm,  ECP =  0.0033361 V,  Time = 2.91929E+02 sec
+
+     H+       =    2.358601E-06 **     OH-      =    2.119901E-06 **
+     Na+      =    2.829028E-06 **     Cl-      =    3.443012E-06 **
+     Fe2+     =    1.870715E-07 **     Mn2+     =    6.106225E-10 **
+     H2S      =    3.405838E-10 **     HS-      =    8.028524E-11 **
+
+     Conductivity (Siemens/cm)  =   1.081457E-05
+     Total Current (A/cm2)      =  -6.464141E-06
+     Total Charge (equiv/liter) =  -2.952631E-13 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 1.25000E-01 cm,  ECP = -0.0526671 V,  Time = 2.91929E+02 sec
+
+     H+       =    5.844878E-06 **     OH-      =    8.554495E-07 **
+     Na+      =    9.007282E-07 **     Cl-      =    1.133991E-05 **
+     Fe2+     =    2.719557E-06 **     Mn2+     =    5.714691E-09 **
+     H2S      =    8.285237E-09 **     HS-      =    7.881411E-10 **
+
+     Conductivity (Siemens/cm)  =   2.401332E-05
+     Total Current (A/cm2)      =  -1.257762E-05
+     Total Charge (equiv/liter) =  -9.688414E-13 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 2.50000E-01 cm,  ECP = -0.1522652 V,  Time = 2.91929E+02 sec
+
+     H+       =    1.825034E-05 **     OH-      =    2.739280E-07 **
+     Na+      =    1.151744E-07 **     Cl-      =    9.051862E-05 **
+     Fe2+     =    3.619010E-05 **     Mn2+     =    2.392164E-08 **
+     H2S      =    5.628907E-08 **     HS-      =    1.716202E-09 **
+
+     Conductivity (Siemens/cm)  =   1.418866E-04
+     Total Current (A/cm2)      =  -6.144166E-04
+     Total Charge (equiv/liter) =  -6.969130E-10 *
+     Net Wall Current (A)       =   6.144166E-08
+     Anodic Curr Dens (A/cm2)   =   6.144174E-04
+
+     Tot Wall/Ext/Int Curnt (A) =   6.144166E-08 / 0.000000E+00 / 6.144166E-08
+     RefE Pot/IR Drop/Polar (V) =   0.008000     / 0.000000     / 0.008000
+     Crack Growth Rate (cm/s)   =   2.275620E-08
+
+     Number of lsode steps/DifEq calls/jacobian evals  =    53 /  323 /    8
+_______________________________________________________________________________
+
+          Concentrations [moles/liter] at Time = 4.3789E+02 sec
+
+ At x = 8.33333E-03 cm,  ECP =  0.0033299 V,  Time = 4.37894E+02 sec
+
+     H+       =    2.355540E-06 **     OH-      =    2.122656E-06 **
+     Na+      =    2.827083E-06 **     Cl-      =    3.430371E-06 **
+     Fe2+     =    1.846597E-07 **     Mn2+     =    5.949135E-10 **
+     H2S      =    3.453142E-10 **     HS-      =    8.150611E-11 **
+
+     Conductivity (Siemens/cm)  =   1.079821E-05
+     Total Current (A/cm2)      =  -6.460253E-06
+     Total Charge (equiv/liter) =   2.308895E-11 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 1.25000E-01 cm,  ECP = -0.0533195 V,  Time = 4.37894E+02 sec
+
+     H+       =    5.769396E-06 **     OH-      =    8.666418E-07 **
+     Na+      =    8.755744E-07 **     Cl-      =    1.108819E-05 **
+     Fe2+     =    2.649763E-06 **     Mn2+     =    5.565903E-09 **
+     H2S      =    8.384360E-09 **     HS-      =    8.080055E-10 **
+
+     Conductivity (Siemens/cm)  =   2.360187E-05
+     Total Current (A/cm2)      =  -1.257005E-05
+     Total Charge (equiv/liter) =  -9.752865E-12 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 2.50000E-01 cm,  ECP = -0.1539687 V,  Time = 4.37894E+02 sec
+
+     H+       =    1.817201E-05 **     OH-      =    2.751088E-07 **
+     Na+      =    1.081001E-07 **     Cl-      =    8.985616E-05 **
+     Fe2+     =    3.590224E-05 **     Mn2+     =    2.378891E-08 **
+     H2S      =    5.651538E-08 **     HS-      =    1.730525E-09 **
+
+     Conductivity (Siemens/cm)  =   1.409312E-04
+     Total Current (A/cm2)      =  -6.140470E-04
+     Total Charge (equiv/liter) =  -8.234249E-10 *
+     Net Wall Current (A)       =   6.140470E-08
+     Anodic Curr Dens (A/cm2)   =   6.140479E-04
+
+     Tot Wall/Ext/Int Curnt (A) =   6.140470E-08 / 0.000000E+00 / 6.140470E-08
+     RefE Pot/IR Drop/Polar (V) =   0.008000     / 0.000000     / 0.008000
+     Crack Growth Rate (cm/s)   =   2.274251E-08
+
+     Number of lsode steps/DifEq calls/jacobian evals  =    77 / 1094 /   31
+_______________________________________________________________________________
+
+          Concentrations [moles/liter] at Time = 6.5684E+02 sec
+
+ At x = 8.33333E-03 cm,  ECP =  0.0033299 V,  Time = 6.56841E+02 sec
+
+     H+       =    2.355480E-06 **     OH-      =    2.122710E-06 **
+     Na+      =    2.827038E-06 **     Cl-      =    3.430092E-06 **
+     Fe2+     =    1.846025E-07 **     Mn2+     =    5.943641E-10 **
+     H2S      =    3.459270E-10 **     HS-      =    8.165284E-11 **
+
+     Conductivity (Siemens/cm)  =   1.079785E-05
+     Total Current (A/cm2)      =  -6.460168E-06
+     Total Charge (equiv/liter) =   2.763244E-11 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 1.25000E-01 cm,  ECP = -0.0533338 V,  Time = 6.56841E+02 sec
+
+     H+       =    5.767762E-06 **     OH-      =    8.668873E-07 **
+     Na+      =    8.749685E-07 **     Cl-      =    1.108272E-05 **
+     Fe2+     =    2.648262E-06 **     Mn2+     =    5.561842E-09 **
+     H2S      =    8.396346E-09 **     HS-      =    8.093898E-10 **
+
+     Conductivity (Siemens/cm)  =   2.359292E-05
+     Total Current (A/cm2)      =  -1.256989E-05
+     Total Charge (equiv/liter) =  -3.432723E-11 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 2.50000E-01 cm,  ECP = -0.1540061 V,  Time = 6.56841E+02 sec
+
+     H+       =    1.817032E-05 **     OH-      =    2.751344E-07 **
+     Na+      =    1.079349E-07 **     Cl-      =    8.984153E-05 **
+     Fe2+     =    3.589605E-05 **     Mn2+     =    2.378604E-08 **
+     H2S      =    5.653733E-08 **     HS-      =    1.731358E-09 **
+
+     Conductivity (Siemens/cm)  =   1.409104E-04
+     Total Current (A/cm2)      =  -6.140389E-04
+     Total Charge (equiv/liter) =  -4.715674E-10 *
+     Net Wall Current (A)       =   6.140389E-08
+     Anodic Curr Dens (A/cm2)   =   6.140398E-04
+
+     Tot Wall/Ext/Int Curnt (A) =   6.140389E-08 / 0.000000E+00 / 6.140389E-08
+     RefE Pot/IR Drop/Polar (V) =   0.008000     / 0.000000     / 0.008000
+     Crack Growth Rate (cm/s)   =   2.274221E-08
+
+     Number of lsode steps/DifEq calls/jacobian evals  =    15 /  111 /    3
+_______________________________________________________________________________
+
+          Concentrations [moles/liter] at Time = 9.8526E+02 sec
+
+ At x = 8.33333E-03 cm,  ECP =  0.0033299 V,  Time = 9.85261E+02 sec
+
+     H+       =    2.355480E-06 **     OH-      =    2.122710E-06 **
+     Na+      =    2.827039E-06 **     Cl-      =    3.430090E-06 **
+     Fe2+     =    1.846024E-07 **     Mn2+     =    5.943627E-10 **
+     H2S      =    3.459442E-10 **     HS-      =    8.165689E-11 **
+
+     Conductivity (Siemens/cm)  =   1.079785E-05
+     Total Current (A/cm2)      =  -6.460168E-06
+     Total Charge (equiv/liter) =   3.137321E-11 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 1.25000E-01 cm,  ECP = -0.0533338 V,  Time = 9.85261E+02 sec
+
+     H+       =    5.767763E-06 **     OH-      =    8.668872E-07 **
+     Na+      =    8.749676E-07 **     Cl-      =    1.108269E-05 **
+     Fe2+     =    2.648263E-06 **     Mn2+     =    5.561842E-09 **
+     H2S      =    8.396679E-09 **     HS-      =    8.094217E-10 **
+
+     Conductivity (Siemens/cm)  =   2.359291E-05
+     Total Current (A/cm2)      =  -1.256989E-05
+     Total Charge (equiv/liter) =  -8.680442E-12 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 2.50000E-01 cm,  ECP = -0.1540061 V,  Time = 9.85261E+02 sec
+
+     H+       =    1.817033E-05 **     OH-      =    2.751342E-07 **
+     Na+      =    1.079346E-07 **     Cl-      =    8.984138E-05 **
+     Fe2+     =    3.589609E-05 **     Mn2+     =    2.378607E-08 **
+     H2S      =    5.653791E-08 **     HS-      =    1.731374E-09 **
+
+     Conductivity (Siemens/cm)  =   1.409103E-04
+     Total Current (A/cm2)      =  -6.140389E-04
+     Total Charge (equiv/liter) =  -2.407207E-10 *
+     Net Wall Current (A)       =   6.140389E-08
+     Anodic Curr Dens (A/cm2)   =   6.140398E-04
+
+     Tot Wall/Ext/Int Curnt (A) =   6.140389E-08 / 0.000000E+00 / 6.140389E-08
+     RefE Pot/IR Drop/Polar (V) =   0.008000     / 0.000000     / 0.008000
+     Crack Growth Rate (cm/s)   =   2.274221E-08
+
+     Number of lsode steps/DifEq calls/jacobian evals  =     9 /   73 /    2
+_______________________________________________________________________________
+
+          Concentrations [moles/liter] at Time = 1.4779E+03 sec
+
+ At x = 8.33333E-03 cm,  ECP =  0.0033299 V,  Time = 1.47789E+03 sec
+
+     H+       =    2.355480E-06 **     OH-      =    2.122710E-06 **
+     Na+      =    2.827039E-06 **     Cl-      =    3.430090E-06 **
+     Fe2+     =    1.846024E-07 **     Mn2+     =    5.943627E-10 **
+     H2S      =    3.459443E-10 **     HS-      =    8.165690E-11 **
+
+     Conductivity (Siemens/cm)  =   1.079785E-05
+     Total Current (A/cm2)      =  -6.460168E-06
+     Total Charge (equiv/liter) =   3.122399E-11 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 1.25000E-01 cm,  ECP = -0.0533338 V,  Time = 1.47789E+03 sec
+
+     H+       =    5.767760E-06 **     OH-      =    8.668877E-07 **
+     Na+      =    8.749667E-07 **     Cl-      =    1.108270E-05 **
+     Fe2+     =    2.648260E-06 **     Mn2+     =    5.561836E-09 **
+     H2S      =    8.396680E-09 **     HS-      =    8.094223E-10 **
+
+     Conductivity (Siemens/cm)  =   2.359291E-05
+     Total Current (A/cm2)      =  -1.256989E-05
+     Total Charge (equiv/liter) =  -3.041987E-11 *
+     Net Wall Current (A)       =   0.000000E+00
+     Anodic Curr Dens (A/cm2)   =   0.000000E+00
+
+ At x = 2.50000E-01 cm,  ECP = -0.1540062 V,  Time = 1.47789E+03 sec
+
+     H+       =    1.817033E-05 **     OH-      =    2.751342E-07 **
+     Na+      =    1.079346E-07 **     Cl-      =    8.984142E-05 **
+     Fe2+     =    3.589608E-05 **     Mn2+     =    2.378606E-08 **
+     H2S      =    5.653791E-08 **     HS-      =    1.731375E-09 **
+
+     Conductivity (Siemens/cm)  =   1.409104E-04
+     Total Current (A/cm2)      =  -6.140389E-04
+     Total Charge (equiv/liter) =  -2.830691E-10 *
+     Net Wall Current (A)       =   6.140389E-08
+     Anodic Curr Dens (A/cm2)   =   6.140398E-04
+
+     Tot Wall/Ext/Int Curnt (A) =   6.140389E-08 / 0.000000E+00 / 6.140389E-08
+     RefE Pot/IR Drop/Polar (V) =   0.008000     / 0.000000     / 0.008000
+     Crack Growth Rate (cm/s)   =   2.274221E-08
+
+     Number of lsode steps/DifEq calls/jacobian evals  =    11 /  236 /    7
+_______________________________________________________________________________
+
+
+ ********* Concentrations Reached STEADY STATE!
+
+       Required RWork Size   =     13222
+       IWork Size            =       260
+       Number of Steps       =      1592
+       # of Func Evals       =     21136
+       # of Jacob Evals      =       594
+       Job Time              =        30. seconds
+
+ CONCENTRATION PROFILE HAS BEEN EVALUATED SUCCESSFULLY!

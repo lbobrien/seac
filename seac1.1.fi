@@ -1,0 +1,138 @@
+c  SEAC.BLK
+c
+c  SEAC - Simulation of Environmentally-Assisted Cracking
+c
+c  This module is included in seac as a common variable block
+c  used by most subroutines.
+c
+c  Version: SEAC 1.1     950114 
+
+c
+c  Author : JOHN H. CHUN
+c           MASSACHUSETTS INSTITUTE OF TECHNOLOGY
+c           185 ALBANY STREET RM NW22-197
+c           CAMBRIDGE, MA 02139
+c           (617) 253-3247
+c           johnchun@mit.edu
+c
+c     ISP = Species Array Size
+c     IRX = Reaction Array Size
+c     IEQ = Total number of equations for lsode = ISP*IRX
+c     INR = Maximum Number of Reactants for a Reaction
+c     INP = Maximum Number of Products for a Reaction
+c     IMP = Maximum Number of Spatial Mesh Points
+c     IDE = Array of Debug Flags
+c     IPO = Maximum Order of Polynomials
+c     IIF = Input file number
+c     IOF = Output file number
+c     IPF = Plot file number
+c     IBF = Batch file number
+c     lrw = LSODE real work array size - Calculated as in lsode writeup:
+c         = 22 + 10*neq + (2*ML + MU)*neq  for MF = 24 or 25.
+c     liw = LSODE integer work array size - Calculated as in lsode writeup:
+c         = 20 + neq  for MF = 21, 22, 24, or 25.
+c           if MF = 24 or 25, input in IWork(1),IWork(2) the lower
+c           and upper half-bandwidths ML,MU.
+c     ML  = MU = half-bandwidth of banded Jacobian
+c         = 2*ISP-1
+c     Adjust these to your heart's content, but give consideration
+c     to your computer's limitations.
+c
+c  Be careful with concentration dimensions!
+c  For Conc(0:ISP,0:IMP+1) at mesh point = m
+c    Conc(0,m) =1    used for null species
+c    Conc(1~ISP,m) = species conc calculated by LSODE
+c  For Conc(0:ISP,0:IMP+1) for species = s
+c    Conc(s,0)     = fixed bulk conc
+c    Conc(s,1~IMP) = crevice conc calculated by LSODE
+c    Conc(s,IMP+1) = fictitious conc used to fix zero flux.
+c                    Calculated by the user.
+c  This requires dCdt(ISP,IMP) for LSODE.
+
+      implicit double precision (A-H, O-Z)
+c      implicit integer*4 (I-N)
+c      implicit double precision (a-h, o-z)
+c      implicit integer*4 (i-n)
+      
+c  type declarations
+
+      real*8 Length,Mobil,MolWt,IRate,JDis,ITotalH,IWallNet,IAnod
+      real*8 ISurfMouth,ILimit,IExtNet,Neutron,NeutCoef,NeutAvg
+      real*8 IPas,ITip,NewtXTol,NewtFTol,Ksp 
+      real*4 Time1
+      integer*4 Charge,RefMesh,MeshSpace
+      logical*4 PlotOut,WritePara,Debug,Ppb,CalcLimit,Batch
+      character*80 TitleLine,InFile,OutFile,PlotFile,BatchFile
+      character SpName*8,RxName*3
+      character*1 Bel,FF,Tab
+
+c  constant declarations
+
+      parameter (ISP=30,IMP=100,IRX=100,INR=3,INP=4,IDE=20,IPO=10,
+     +           IEQ=ISP*IMP,LIWMax=20+IEQ)
+      parameter (IIF=10,IOF=11,IPF=12,IBF=13)
+      parameter (BatchFile='seac.bat')
+      parameter (GasConst=8.31441d0,  !J/mol-K
+     +           Faraday=96484.6d0,   !C/equiv
+     +           Pi=3.141592653589793238d0)
+      parameter (MolWtH=1.00797d0,MolWtO=15.9994d0,
+     +           MolWtH2O=2.d0*MolWtH+MolWtO)
+c      parameter (Bel=7,FF=12,Tab=9)  !ascii bel,form feed, tab character
+      parameter (Bel=char(7),FF=char(12),Tab=char(9))  !ascii bel,form feed
+
+c  common declarations
+
+      common /FileName/ InFile,OutFile,PlotFile,TitleLine
+      common /Size/ NSp,NMeshIn,NMeshEx,NMesh,NRx,NTRx,NTRx1,NTRx2,
+     +              NWRx,NWRx1,NWRx2,NSRx,NSRx1,NSRx2,
+     +              NTDis,NTDis1,NTDis2,NWDis,NWDis1,NWDis2,
+     +              NSDis,NSDis1,NSDis2,NARx,NCorData,Diameter,
+     +              NPRx,NPRx1,NPRx2
+      common /TimeControl/ Ti,TInit,TFinal,TStep,TFirst,TOut
+      common /Dimension/ Length,Width(0:IMP),WidthMouth,x(0:IMP+1),
+     +                   WallSide,Height,DifLayer,VolMouth,EndFlux,
+     +                   RefDist,RefMesh,WidthH(0:IMP),Gap
+      common /State/ TempRef,Temp,Density,Viscosity,Re,ChargeDens
+      common /Control/ PlotOut,MeshSpace,Ppb,WritePara,CalcLimit,
+     +                 Debug(IDE),SteadyMin
+      common /Names/ SpName(0:ISP),RxName(0:IRX)
+      common /Species/ Conc(0:ISP,0:IMP),Co(IEQ),
+     +                 Diff(ISP),Mobil(ISP),MolWt(0:ISP),Henry(ISP),
+     +                 GGamma(ISP),GNeut(ISP),ConvFact(ISP),
+     +                 iHydro,iChlor
+      common /SpCharge/ Charge(0:ISP)
+      common /Reaction/ RateConst(IRX),EA(IRX)
+      common /Potentials/ PotMet,Pot(0:IMP),PotE(0:IMP),PotStd(0:IRX),
+     +                    PotPas(0:IRX),IPas(0:IRX),
+     +                    PotPit(0:IRX),PotInit,PotFinal,PotCor,
+     +                    PotPasCoef(0:IRX),PotPitCoef(0:IRX)
+      common /RxInts/ IR(IRX,INR),IP(IRX,INP),
+     +                Koef(IRX,0:ISP),NetCharge(IRX)
+      common /Radiation/ GammaCoef(0:IPO),NeutCoef(0:IPO),GConvert,
+     +                   GammaAvg,NeutAvg,Gamma(0:IMP),Neutron(0:IMP)
+      common /PolyOrder/ MaxOrdNeut,MaxOrdGamma,MaxOrdVel
+      common /Flow/ Velocity,VelCoef(0:IPO),VelH(0:IMP)
+      common /Flux/ FluxH(ISP,0:IMP),ITotalH(0:IMP),
+     +              IWallNet(0:IMP),dIWdP(0:IMP),
+     +              ISurfMouth,dISMdP,ILimit(0:IRX),IAnod(0:IMP),
+     +              FluxE(ISP,IMP),IExtNet(IMP),dIEdP(IMP),ITip
+      common /Mesh/ ZC(0:IMP),Cond(0:IMP),CondxH(0:IMP-1),
+     +              FZDdCdx(0:IMP-1)
+      common /StopWatch/ Time1
+      common /LsodeInts/ IOpt,ITask,ITol,IState,MF,
+     +                   NStep,NFunc,NJacob,IWork(LIWMax)
+      common /LsodeData/ RTol,ATol
+      common /Others/ FRT,NewtMax,NewtXTol,NewtFTol,Small,Batch
+
+c  equivalence declarations
+
+      dimension ConcBulk(ISP)
+      equivalence (ConcBulk(1),Conc(1,0))
+
+      dimension IRate(IRX),JDis(IRX)
+      equivalence (RateConst,IRate,JDis)
+
+      dimension EACoef(IRX),Ksp(IRX)
+      equivalence (EA,EACoef,Ksp)
+
+      equivalence (Width(IMP),WidthTip)
